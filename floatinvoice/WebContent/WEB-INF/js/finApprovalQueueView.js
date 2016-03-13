@@ -1,5 +1,13 @@
 
 angular.module('finfloatInvoiceListApp')
+/*.config(function($mdDateLocaleProvider) {
+
+
+     $mdDateLocaleProvider.formatDate = function(date) {
+      console.log(date);
+       return moment(date).format('YYYY-MM-DD');
+    };
+})*/
   .controller('FinApprovalViewCtrl', ['$scope', '$http','acroNameService', function ($scope, $http,acroNameService){
         var acro = acroNameService.getAcronym();  
         $http.get('/floatinvoice/invoice/viewBids?acro='+acro).success(function(data){
@@ -23,6 +31,7 @@ angular.module('finfloatInvoiceListApp')
 
       });
      }])
+
 .controller('RightCtrl', ['$http', '$scope', '$window', '$timeout', '$mdSidenav', '$log', 'acroNameService', 
   function ($http, $scope, $window, $timeout, $mdSidenav, $log, acroNameService) {
   var financierAcro = acroNameService.getAcronym();  
@@ -33,12 +42,13 @@ angular.module('finfloatInvoiceListApp')
         $scope.myDate.getFullYear(),
         $scope.myDate.getMonth(),
         $scope.myDate.getDate());
+      
+     // $scope.minCloseDate = $scope.minDate; 
 
       $scope.maxDate = new Date(
-        $scope.myDate.getFullYear(),
-        $scope.myDate.getMonth() + 4,
-        $scope.myDate.getDate()); 
-
+        $scope.minDate.getFullYear(),
+        $scope.minDate.getMonth() + 4,
+        $scope.minDate.getDate()); 
 
   $scope.toggleRight = function(item, navID) {
         $scope.user = "";
@@ -106,8 +116,10 @@ angular.module('finfloatInvoiceListApp')
       // check to make sure the form is completely valid
       if ($scope.userForm.$valid) {
           $scope.user.financierAcro = financierAcro;
+          $scope.user.smeAcro = $scope.smeAcro;
           $scope.user.poolRefId = $scope.poolRefId;
           $scope.user.loanAmt = $scope.loanAmtOffer;
+          console.log($scope.user);
           $http({
               method:'POST',
               url:'/floatinvoice/bank/approveLoan',
@@ -127,9 +139,4 @@ angular.module('finfloatInvoiceListApp')
       }
     };
 
-  }])
-.config(function($mdDateLocaleProvider) {
-  $mdDateLocaleProvider.formatDate = function(date) {
-    return moment(date).format('YYYY-MM-DD');
-  };
-});
+  }])  ;

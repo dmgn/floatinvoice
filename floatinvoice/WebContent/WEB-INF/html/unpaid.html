@@ -2,6 +2,7 @@
   <table ng-controller="UnpaidCtrl" class="table table-striped">
     <tr>
       <th><a href="" ng-click="sortField = 'smeCtpy'">Buyer Name</td>
+      <th><a href="" ng-click="sortField = 'invoicePONo'">Purchase Order #</td>
       <th><a href="" ng-click="sortField = 'amount'"> Amount</td>
       <th><a href="" ng-click="sortField = 'invoiceNo'">Invoice #</th>
       <th><a href="" ng-click="sortField = 'startDt'">Invoice Date</th>
@@ -12,6 +13,9 @@
          <th>
             <input type="text" ng-model="search.smeCtpy" placeholder="search for buyer" class="input-sm form-control"/>
         </th>
+         <th>
+            <input type="text" ng-model="search.invoicePONo" placeholder="search for purchase order" class="input-sm form-control"/>
+        </th>        
         <th>
             <input type="text" ng-model="search.amount" placeholder="search for amount" class="input-sm form-control"/>
         </th>
@@ -31,6 +35,7 @@
     </tr>
     <tr dir-paginate="item in invoices | filter:search | orderBy:sortField| itemsPerPage: 10">
       <td>{{item.smeCtpy}}</td>
+      <td>{{item.invoicePONo}}</td>
       <td>&#x20B9; {{item.amount}}</td>
       <td>{{item.invoiceNo}}</td>
       <td>{{item.startDt}}</td>

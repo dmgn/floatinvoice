@@ -7,85 +7,20 @@
        .success(function(data){
           $scope.invoices = data.list;
           $scope.sortField = 'totPoolAmt';
-           console.log(data);
-          });
-
-
-  /*  function buildToggler(navID, poolRefId) {
-      console.log(navID);
-      return function() {
-        $mdSidenav(navID)
-          .toggle()
-          .then(function () {
-            $log.debug("toggle " + navID + " is done");
-          });
-      }
-    }*/
-
-		 	/*$scope.displayInvoices = function (poolRefId){
-        console.log(poolRefId);
-
-        ModalService.showModal({
-            templateUrl: '/floatinvoice/html/invoicePopUp.html',
-            controller: 'InvoicePopUpCtrl'
-        }).then(function(modal) {
-          console.log(modal);
-            modal.element.modal();
-            modal.close.then(function(result) {
-                //$scope.message = "You said " + result;
-                console.log("closed");
-            });
-        });
-				//var newWindowRef = $window.open('/floatinvoice/html/invoicePopUp.html', 'name', 'width=600,height=400');
-        //var newWindowRootScope = newWindowRef.angular.element("#main").scope();
-
-        //newWindowRootScope.$broadcast("INTER_WINDOW_DATA_TRANSFER", {"poolRefId":poolRefId});  
-/*        var modalInstance = $modal.open({
-          templateUrl: '/floatinvoice/html/invoicePopUp.html',
-          controller: ModalInstanceCtrl,
-          resolve: {
-            mydata: function() {
-                return "Loading...";
+          $scope.refresh = function(refId){
+            console.log(refId);
+          var index = -1;
+          var invoiceList =  $scope.invoices;
+          for (var i=0; i<invoiceList.length; i++){
+            if( invoiceList[i].refId == refId ) {
+                index = i;
+                break;
             }
           }
-        });
-
-        modalInstance.opened.then(
-          function() {
-            $scope.loadData(modalInstance);
-          },
-          function() {
-            $log.info('Modal dismissed at: ' + new Date());
-          }
-        );
-
-        $scope.loadData = function(aModalInstance) {
-          $log.info("starts loading");
-          $timeout(function() {
-            $log.info("data loaded");
-            aModalInstance.setMyData("data loaded...");
-          }, 3000);
+          $scope.invoices.splice(index, 1);
         };
-
-
-			};*/
-
- /*     var ModalInstanceCtrl = function($scope, $modalInstance, mydata) {
-        $scope.mydata = mydata;
-
-        $modalInstance.setMyData = function(theData) {
-          $scope.mydata = theData;
-        };
-
-        $scope.ok = function() {
-          $modalInstance.close('close');
-        };
-        $scope.cancel = function() {
-          $modalInstance.dismiss('cancel');
-        };
-      };*/
-
-
+           console.log(data);
+          });
 
 }])
   
@@ -93,12 +28,10 @@
   function ($http, $scope, $window, $timeout, $mdSidenav, $log, fiService) {
     var smeAcro = fiService.getAcronym();  
 
-  $scope.toggleRight = function(poolRefId, navID) {
+  $scope.toggleRight = function(refId, navID) {
         $scope.user = "";
-        $scope.userForm.$setPristine();
         $scope.showId = true;
-        $scope.poolRefId = poolRefId;
-        console.log("poolRefId: " + poolRefId + " navID: "+ navID + ", " + $scope.showId);
+        $scope.refId = refId;
         $mdSidenav(navID)
           .toggle()
           .then(function () {
@@ -150,12 +83,27 @@
         .then(function () {
           $log.debug("close RIGHT is done");
         });
-        $scope.userForm.$setPristine();
+        //$scope.userForm.$setPristine();
     };
 
     $scope.submitForm = function() {
+          $http({
+              method:'POST',
+              url:'/floatinvoice/invoice/acceptBid',
+              data:JSON.stringify({"refId" : $scope.refId}),
+              xhrFields: {
+                  withCredentials: true
+              },
+              headers:{'Content-Type':'application/json'}
+              }).then(function successCallback(response) {
+                  $scope.showId = false;
+                  console.log(response);
+                  $scope.refresh($scope.refId);
+                }, function errorCallback(response) {
+                  console.log(response);
+            });
       // check to make sure the form is completely valid
-      if ($scope.userForm.$valid) {
+/*      if ($scope.userForm.$valid) {
           $scope.user.acro = smeAcro;
           console.log($scope.poolRefId);
           $http({
@@ -172,18 +120,7 @@
                 }, function errorCallback(response) {
                   console.log(response);
             });
-      }
+      }*/
     };
 
   }]);
-
-
-
-/* .config(function($routeProvider){
-    $routeProvider.when('/:',{
-        templateUrl:'/floatinvoice/html/upload.html',
-        controller:'UploadCtrl'
-      })
-
- });*/
-

@@ -27,7 +27,7 @@
   <table ng-controller="FinApprovalViewCtrl" class="table table-striped">
     <tr>
       <th><a href="" ng-click="sortField = 'invoicePoolNo'">Invoice Pool #</th>
-      <th><a href="" ng-click="sortField = 'totPoolAmt'">Loan Amount</th>
+      <th><a href="" ng-click="sortField = 'totPoolAmt'">Total Pool Amount</th>
       <th><a href="" ng-click="sortField = 'sme'">Supplier</th>
       <th><a href="" ng-click="sortField = 'smeCtpy'">Buyer</th>
       <th>Action</th>
@@ -75,18 +75,24 @@
         </md-toolbar>
         <md-content  layout-padding="">
           <form name="userForm" ng-submit="submitForm()" novalidate ng-show="showId">
-        
+       
             <div layout-xl="row">
              <p class="md-subhead">Net Loan Amount : &#x20B9; {{item.loanAmtOffer}}</p>
-           
-              <p class="md-subhead">Interest Rate : {{item.interestRate}} %</p>
-              <!-- <input type="text" name="interestRate" ng-model="user.interestRate"/>  -->        
+            </div>
+            <div layout-xl="row">
+             <p class="md-subhead">Interest Rate : {{item.interestRate}} %</p>
+            </div>
+            <div layout-xl="row">
+              <p>
+             <md-datepicker id="user.loanDispatchDt" ng-model="user.loanDispatchDt"  md-placeholder=" Dispatch date" md-min-date="minDate" md-max-date="maxDate" formatDate="yyyy-MM-dd"></md-datepicker>
+              </p>
+             </div>
 
-            <md-datepicker ng-model="user.loanDispatchDt" md-min-date="minDate" md-placeholder="Loan Dispatch date">
-             </md-datepicker> 
-            
+            <div layout-xl="row">
+              <p>
+              <md-datepicker id="user.loanCloseDt" ng-model="user.loanCloseDt"  md-placeholder="Close date" md-min-date="minDate" md-max-date="maxDate" formatDate="yyyy-MM-dd"></md-datepicker>
+              </p>
 
-            <md-datepicker ng-model="user.loanCloseDt" md-max-date="maxDate" md-placeholder="Loan Close date"></md-datepicker>
             </div>
              <div layout-gt="row">
 

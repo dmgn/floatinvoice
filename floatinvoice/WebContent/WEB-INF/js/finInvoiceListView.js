@@ -36,7 +36,7 @@ angular.module('finfloatInvoiceListApp')
   $scope.toggleRight = function(item, navID) {
         $scope.user = "";
         $scope.userForm.$setPristine();
-        $scope.showId = true;
+        $scope.showIdListView = true;
         $scope.poolRefId = item.poolRefId;
         $scope.totPoolAmt = item.totPoolAmt;
         $mdSidenav(navID)
@@ -85,7 +85,7 @@ angular.module('finfloatInvoiceListApp')
 
 
     $scope.close = function () {
-      console.log("close" + $scope.showId);
+      console.log("close" + $scope.showIdListView);
       $mdSidenav('right').close()
         .then(function () {
           $log.debug("close RIGHT is done");
@@ -110,7 +110,7 @@ angular.module('finfloatInvoiceListApp')
               },
               headers:{'Content-Type':'application/json'}
               }).then(function successCallback(response) {
-                  $scope.showId = false;
+                  $scope.showIdListView = false;
                   console.log(response);
                   $scope.refresh($scope.refId);
                    $scope.isLoading = false;

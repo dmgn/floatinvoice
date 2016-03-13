@@ -27,7 +27,7 @@
   <table ng-controller="InvoiceFinViewCtrl" class="table table-striped">
     <tr>
       <th><a href="" ng-click="sortField = 'invoicePoolNo'">Invoice Pool #</th>
-      <th><a href="" ng-click="sortField = 'totPoolAmt'">Loan Amount</th>
+      <th><a href="" ng-click="sortField = 'totPoolAmt'">Total Pool Amount</th>
       <th><a href="" ng-click="sortField = 'sme'">Supplier</th>
       <th><a href="" ng-click="sortField = 'smeCtpy'">Buyer</th>
       <th>Action</th>
@@ -69,12 +69,12 @@
 <!--       </div>
  -->      <div flex=""></div>
 <!--     </md-content>
- -->  <md-sidenav class="md-sidenav-right md-whiteframe-z4" md-component-id="right" ng-model="showId">
+ -->  <md-sidenav class="md-sidenav-right md-whiteframe-z4" md-component-id="right" ng-model="showIdListView">
         <md-toolbar class="md-theme-light">
           <h1 class="md-toolbar-tools">Make an offer..</h1>
         </md-toolbar>
         <md-content  layout-padding="">
-          <form name="userForm" ng-submit="submitForm()" novalidate ng-show="showId">
+          <form name="userForm" ng-submit="submitForm()" novalidate ng-show="showIdListView">
            <!--  <md-input-container class="md-block" flex-gt-sm>
               <label>Bank Name</label>
               <input type="text" name="loanPeriod" ng-model="user.loanPeriod"/>         
@@ -117,7 +117,7 @@
              <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
              <button type="button" class="btn btn-primary" ng-click="close()">Close</button>
           </form>
-          <div ng-hide="showId">
+          <div ng-hide="showIdListView">
 
             <p> Thank you, account saved successfully.</p>
             <div layout-gt-xs="row">

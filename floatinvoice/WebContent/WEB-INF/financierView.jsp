@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/angular-material.min.css">
+
   <style>
     table, th , td  {
       /*border: 1px solid grey;*/
@@ -27,11 +28,15 @@
   <!-- Angular Material Library -->
   <script src="js/angular-material.min.js"></script>
 <script src="https://rawgit.com/dwmkerr/angular-modal-service/master/dst/angular-modal-service.js"></script>
+  <script src="js/moment.js"></script>
+
   <script src="js/dirPagination.js"></script>
   <script src="js/angular-route.min.js"></script>
   <script src="js/appFinancierView.js"></script>
   <script src="js/finInvoiceListView.js"></script>
   <script src="js/finApprovalQueueView.js"></script>
+  <script src="js/finFundedListView.js" ></script>
+
   <script>
     finfloatInvoiceListApp.service('acroNameService', function(){
       this.getAcronym = function(){

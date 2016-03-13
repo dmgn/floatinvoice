@@ -19,7 +19,7 @@
       })
       .when('/funded',{
         templateUrl:'/floatinvoice/html/finFundedInvoiceView.html',
-        controller:'InvoiceFinViewCtrl'
+        controller:'InvoiceLoanViewCtrl'
       })
       .when('/repaid',{
         templateUrl:'/floatinvoice/html/finRePaidInvoiceView.html',
