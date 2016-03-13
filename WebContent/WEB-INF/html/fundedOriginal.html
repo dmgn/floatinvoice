@@ -1,0 +1,122 @@
+<div ng-controller="FundedCtrl">
+
+  <table  class="table table-striped">
+    <tr>
+      <th><a href="" ng-click="sortField = 'invoicePoolNo'">Invoice Pool #</th>
+      <th><a href="" ng-click="sortField = 'smeCtpy'">Buyer Name</td>
+      <th><a href="" ng-click="sortField = 'totPoolAmt'">Loan Amount</td>
+      <th><a href="" ng-click="sortField = 'interestRate'">Interest Rate</th>
+      <th><a href="" ng-click="sortField = 'financier'">Financier</th>
+      <th/>    
+    </tr>
+    <tr>
+        <th>
+            <input type="text" ng-model="search.invoicePoolNo" placeholder="search for buyer" class="input-sm form-control" />
+        </th>
+        <th>
+            <input type="text" ng-model="search.smeCtpy" placeholder="search for buyer" class="input-sm form-control"/>
+        </th>
+        <th>
+            <input type="text" ng-model="search.totPoolAmt" placeholder="search for amount" class="input-sm form-control"/>
+        </th>
+
+         <th>
+            <input type="text" ng-model="search.interestRate" placeholder="search for rate" class="input-sm form-control"/>
+        </th>         
+
+         <th>
+            <input type="text" ng-model="search.financier" placeholder="search for financier" class="input-sm form-control"/>
+        </th>
+         <th width=>
+        </th>
+    </tr>
+    <tr dir-paginate="item in invoices | filter:search | orderBy:sortField| itemsPerPage: 10">
+
+<!-- tr ng-repeat-start="item in invoices">
+      <td>
+              <button ng-if="item.expanded" ng-click="item.expanded = false">-</button>
+              <button ng-if="!item.expanded" ng-click="item.expanded = true">+</button>
+      </td> -->
+
+      <td ><a href="javascript:void(0);" ng-click=displayInvoices(item.poolRefId) >{{item.invoicePoolNo}}</a>
+
+      </td>      
+      <td>{{item.smeCtpy}}</td>
+      <td>&#x20B9; {{item.totPoolAmt}}</td>
+      <td>{{item.interestRate}}%</td>
+      <td>{{item.financier}}</td>
+      <td >
+<!--       <button type="button" class="btn btn-primary">Get Paid</button>
+ -->   
+<section layout-lg="row" flex="" ng-controller="RightCtrl">
+<!--     <md-content flex="" layout-padding="">
+ --><!--       <div layout="column" layout-fill="" layout-align="top center">   
+ -->    <div>
+          <!-- <md-button ng-click="toggleRight()" ng-hide="isOpenRight()" class="md-primary">
+            Get Paid
+          </md-button> -->
+          <button type="button" class="btn btn-primary" ng-click="toggleRight(item.poolRefId, 'right')" ng-hide="isOpenRight()">Get Paid</button>
+        </div>
+<!--       </div>
+ -->      <div flex=""></div>
+<!--     </md-content>
+ -->  <md-sidenav class="md-sidenav-right md-whiteframe-z4" md-component-id="right" ng-model="showId">
+        <md-toolbar class="md-theme-light">
+          <h1 class="md-toolbar-tools">Where should we deposit the money?</h1>
+        </md-toolbar>
+        <md-content  layout-padding="">
+          <form name="userForm" ng-submit="submitForm()" novalidate ng-show="showId">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Bank Name</label>
+              <input type="text" name="bankName" ng-model="user.bankName"/>         
+            </md-input-container>
+            
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Branch Name</label>
+                  <input type="text" name="branchName" ng-model="user.branchName"/>         
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>IFSC Code</label>
+                  <input type="text" name="ifscCode" ng-model="user.ifscCode"/>         
+                </md-input-container>
+            </div>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Bank Account Number</label>
+              <input type="text" name="bankAcctNo" ng-model="user.bankAcctNo">
+            </md-input-container>              
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Account Type</label>
+              <md-select ng-model="user.acctType">
+                <md-option value="CHECKING">Checking</md-option>
+                <md-option value="SAVINGS">Savings</md-option>
+              </md-select>
+            </md-input-container>
+             
+             <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+             <button type="button" class="btn btn-primary" ng-click="close()">Close</button>
+          </form>
+          <div ng-hide="showId">
+
+            <p> Thank you, account saved successfully.</p>
+            <div layout-gt-xs="row">
+
+            <button type="button" class="btn btn-primary" ng-click="close()">Close</button>
+
+            </div>
+          </div>
+     
+        </md-content>
+      </md-sidenav>
+      </section>
+
+      </td>
+    </tr>  
+    <!-- <tr ng-if="item.expanded" ng-repeat-end="">
+      <td colspan="3">{{item.poolRefId}}</td>
+    </tr>  --> 
+  </table>
+  <div align="center">
+    <dir-pagination-controls/>
+  </div>
+</div>
