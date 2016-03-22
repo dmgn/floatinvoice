@@ -1,0 +1,86 @@
+
+  <table ng-controller="PaymentCtrl" class="table table-striped">
+    <tr>
+      <th></th>
+      <th><a href="" ng-click="sortField = 'loanId'">Loan #</td>
+      <th><a href="" ng-click="sortField = 'loanAmt'">Loan Amount</td>
+      <th><a href="" ng-click="sortField = 'interestRate'">Interest Rate</th>
+      <th><a href="" ng-click="sortField = 'financierAcro'">Financier</td>
+    </tr>
+    <!-- <tr>
+         <th>
+            <input type="text" ng-model="search.smeCtpy" placeholder="search for buyer" class="input-sm form-control"/>
+        </th>
+         <th>
+            <input type="text" ng-model="search.invoicePONo" placeholder="search for purchase order" class="input-sm form-control"/>
+        </th>        
+        <th>
+            <input type="text" ng-model="search.amount" placeholder="search for amount" class="input-sm form-control"/>
+        </th>
+        <th>
+            <input type="text" ng-model="search.invoiceNo" placeholder="search for invoice number" class="input-sm form-control" />
+        </th>
+        
+         <th>
+            <input type="text" ng-model="search.startDt" placeholder="search for invoice date" class="input-sm form-control" />
+        </th>
+         <th>
+            <input type="text" ng-model="search.endDt" placeholder="search for due date" class="input-sm form-control" />
+        </th>
+
+      
+         <th/>
+    </tr> -->
+    <tr ng-repeat-start="loan in loans | filter:search | orderBy:sortField" >
+      <td>
+              <button ng-if="loan.expanded" ng-click="loan.expanded = false">-</button>
+              <button ng-if="!loan.expanded" ng-click="loan.expanded = true">+</button>
+      </td>
+      <td>{{loan.loanId}}</td>
+      <td>&#x20B9; {{loan.loanAmt}}</td>
+      <td>{{loan.interestRate}}%</td>
+      <td>{{loan.financierAcro}}</td>  
+    </tr>
+    <tr ng-if="loan.expanded" ng-repeat-end="">
+
+    		<td></td>
+    		<td colspan="4">
+    			<table class="table table-striped">
+    			 <tr>
+    			    <th>Installment #</th>
+    			 	<th>Due Date</th>
+    			 	<th>Amount Due</th>
+    			 	<th>Fees</th>
+    			 	<th></th>
+    			 </tr>
+    			 <tr ng-repeat="emi in loan.emis" >
+    			 	<td >{{$index + 1}} </td>
+    			 	<td >{{emi.paymentDueDt}}</td>
+    			 	<td >&#x20B9;{{emi.amt}}</td>  
+    			 	<td >&#x20B9;{{emi.fees}}</td>   
+
+    			 	<td ng-if="$index == '0'">
+			      		<button type="button" class="btn btn-primary" ng-click=collectNow(item.refId)>Pay Now</button>
+			    	</td> 
+			    	<td ng-if="$index != '0'">
+			      		<button type="button" class="btn btn-primary" ng-click=collectNow(item.refId)>Pay Later</button>
+			    	</td>    			 	
+    			  </tr>
+    			 </table>
+    		</td>
+    	<!-- 	<tr>
+    			<td >{{loan.emis[$index].loanInstallmentId}}</td>
+    			<td >{{loan.emis[$index].amt}}</td>
+    			<td >{{loan.emis[$index].paymentDueDt}}</td>
+    			<td >{{loan.emis[$index].fees}}</td>
+    			<td >
+			      <button type="button" class="btn btn-primary" ng-click=collectNow(item.refId)>Pay Now</button>
+			    </td>
+    		</tr> -->
+    	
+      
+    </tr>
+  </table>
+  <div align="center">
+    
+  </div>

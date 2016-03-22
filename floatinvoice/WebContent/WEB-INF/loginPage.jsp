@@ -42,7 +42,7 @@
                         data:$scope.user,
                         headers:{'Content-Type':'application/json'}
                         }).then(function successCallback(response) {
-                            $window.location.replace('/floatinvoice/welcomePage#/upload');
+                            $window.location.replace('/floatinvoice/welcomePage#/homePg');
                             console.log(response);
                           }, function errorCallback(response) {
                             console.log(response);

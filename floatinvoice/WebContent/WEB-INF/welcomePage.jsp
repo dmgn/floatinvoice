@@ -35,12 +35,16 @@
   <script src="js/dirPagination.js"></script>
 
   <script src="js/angular-route.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-route-segment/1.4.0/angular-route-segment.min.js"></script>
+
   <script src="js/app.js"></script>
   <script src="js/funded.js"></script>
   <script src="js/paid.js"></script>
   <script src="js/pending.js"></script>
   <script src="js/unpaid.js"></script>
   <script src="js/upload.js"></script>
+  <script src="js/homePage.js"></script>
+
   <script>
     floatInvoiceListApp.service('fiService', function(){
       this.getAcronym = function(){
@@ -50,30 +54,54 @@
     floatInvoiceListApp.controller('TabsCtrl', ['$scope', '$location', 
       function ($scope, $location) {
 
-      $scope.tabs = [
+      /*$scope.tabs = [
           { link : '#/upload', label : 'Upload' },
           { link : '#/unpaid', label : 'Unpaid' },
           { link : '#/pending', label : 'Pending' },
           { link : '#/funded', label : 'Bids' },
           { link : '#/paid', label : 'Paid' }
-        ];     
+        ]; */  
+      $scope.vtabs = [
+          { link : '#/homePg', label : 'Home' },
+          { link : '#/payments', label : 'Manage Payments' },
+          { link : '#/reports', label : 'Reports' },
+          { link : '#/profile', label : 'Manage Profile' },
+          
+        ];
+
       //console.log("hash " + $location.url());
-      //$scope.selectedTab = $scope.tabs[0];   
-      var index = -1;
-      var tabList =  $scope.tabs;
-      for (var i=0; i<tabList.length; i++){
-        if( tabList[i].link == '#'+$location.url() ) {
-            index = i;
+      $scope.vselectedTab = $scope.vtabs[0];   
+      var vindex = -1;
+      var vtabList =  $scope.vtabs;
+      //var vtabList = $scope.vtabs;
+
+      for (var i=0; i<vtabList.length; i++){
+        if( vtabList[i].link == '#'+$location.url() ) {
+            vindex = i;
             break;
         }
       }
-      $scope.selectedTab = $scope.tabs[index];
 
-      $scope.setSelectedTab = function(tab) {
-        $scope.selectedTab = tab;
+    /*  for (var i=0; i<vtabList.length; i++){
+        if( vtabList[i].link == '#'+$location.url() ) {
+            vindex = i;
+            break;
+        }
+      }*/
+     /* if(index > 0){
+        $scope.selectedTab = $scope.tabs[index];
+      }*/
+     
+      $scope.vselectedTab = $scope.vtabs[vindex];
+     
+
+      $scope.vsetSelectedTab = function(tab, alignment) {
+        $scope.vselectedTab = tab;
+        
       }
-      $scope.tabClass = function(tab) {
-        if ($scope.selectedTab == tab) {
+      $scope.vtabClass = function(tab, alignment) {
+       console.log("tabClass invoked");
+        if ($scope.vselectedTab == tab) {
           return "active";
         } else {
           return "";
@@ -123,11 +151,21 @@
           </div>
       </div>
     </div>
-    <ul class="nav nav-tabs nav-pills nav-justified" ng-controller="TabsCtrl">
-      <li ng-class="tabClass(tab)" ng-repeat="tab in tabs" tab="tab"><a href="{{tab.link}}" ng-click="setSelectedTab(tab)">{{tab.label}}</a></li>
-    </ul>
+    <div class="row"> 
+      <div class="col-sm-2">
+        <ul class="nav nav-tabs nav-pills nav-stacked" ng-controller="TabsCtrl">
+          <li ng-class="vtabClass(vtab, 'stacked')" ng-repeat="vtab in vtabs" tab="vtab"><a href="{{vtab.link}}" ng-click="vsetSelectedTab(vtab, 'stacked')">{{vtab.label}}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-10">
+       <!--  <ul class="nav nav-tabs nav-pills nav-justified" ng-controller="TabsCtrl">
+          <li ng-class="tabClass(tab, 'justified')" ng-repeat="tab in tabs" tab="tab"><a href="{{tab.link}}" ng-click="setSelectedTab(tab, 'justified')">{{tab.label}}</a></li>
+        </ul> -->
+        <div app-view-segment="0"></div>
+      </div>
+    </div>
     <br/>
-    <div ng-view></div>
+    
   </div>
 </div>
     
