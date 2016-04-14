@@ -4,13 +4,18 @@ var floatInvoiceListApp = angular.module('floatInvoiceListApp',
 floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSegmentProvider) {
     $routeSegmentProvider.
     when('/homePg','s1').
-    when('/reports','s2').
-    when('/payments','s3').
+    when('/reports','s3').
+    when('/payments','s2').
+    when('/profile','s4').
     when('/s1/upload','s1.upload').
     when('/s1/unpaid','s1.unpaid').
     when('/s1/pending','s1.pending').
     when('/s1/funded','s1.funded').
-    when('/s1/paid','s1.paid');
+    when('/s1/paid','s1.paid').
+    when('/s4/dashbd','s4.dashbd').
+    when('/s4/compInfo','s4.compInfo').
+    when('/s4/directorInfo','s4.directorInfo');
+    //when('/s4/funded','s4.funded');
 
     $routeSegmentProvider
     .segment('s1', {
@@ -20,8 +25,8 @@ floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSe
 
     $routeSegmentProvider
     .segment('s2', {
-        templateUrl: '/floatinvoice/html/paid.html',
-        controller: 'JustifiedTabsCtrl'
+        templateUrl: '/floatinvoice/html/payment.html',
+        controller:'PaymentCtrl'
     });
 
     $routeSegmentProvider
@@ -29,6 +34,20 @@ floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSe
         templateUrl: '/floatinvoice/html/paid.html',
         controller: 'JustifiedTabsCtrl'
     });
+
+    $routeSegmentProvider
+    .segment('s4', {
+        templateUrl: '/floatinvoice/html/profile.html',
+        controller: 'ProfileTabsCtrl'
+    });
+
+/*    $routeSegmentProvider
+      .within('s2')
+      .segment('upload', {
+        templateUrl:'/floatinvoice/html/upload.html',
+        controller:'UploadCtrl'
+    });*/
+
 
     $routeSegmentProvider
       .within('s1')
@@ -64,6 +83,27 @@ floatInvoiceListApp.config(function ($locationProvider, $routeProvider, $routeSe
         templateUrl:'/floatinvoice/html/paid.html',
         controller:'PaidCtrl'
     });
+
+    $routeSegmentProvider
+      .within('s4')
+      .segment('dashbd', {
+        templateUrl:'/floatinvoice/html/borrowerDashboard.html',
+        controller:'PaidCtrl'
+    });
+
+    $routeSegmentProvider
+      .within('s4')
+      .segment('compInfo', {
+        templateUrl:'/floatinvoice/html/companyInfo.html',
+        controller:'PaidCtrl'
+    });
+    
+    $routeSegmentProvider
+      .within('s4')
+      .segment('directorInfo', {
+        templateUrl:'/floatinvoice/html/directorInfo.html',
+        controller:'PaidCtrl'
+    });  
 });
 
 

@@ -24,11 +24,12 @@
 
 }])
   
-.controller('RightCtrl', ['$http', '$scope', '$window', '$timeout', '$mdSidenav', '$log', 'fiService', 
+.controller('FundedRightCtrl', ['$http', '$scope', '$window', '$timeout', '$mdSidenav', '$log', 'fiService', 
   function ($http, $scope, $window, $timeout, $mdSidenav, $log, fiService) {
     var smeAcro = fiService.getAcronym();  
 
   $scope.toggleRight = function(refId, navID) {
+        console.log("toggleRight = " + refId);
         $scope.user = "";
         $scope.showId = true;
         $scope.refId = refId;
@@ -87,6 +88,7 @@
     };
 
     $scope.submitForm = function() {
+          console.log( " submitForm " + $scope.refId);
           $http({
               method:'POST',
               url:'/floatinvoice/invoice/acceptBid',

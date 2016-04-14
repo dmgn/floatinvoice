@@ -32,7 +32,10 @@
 
   <script src="js/dirPagination.js"></script>
   <script src="js/angular-route.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-route-segment/1.4.0/angular-route-segment.min.js"></script>
   <script src="js/appFinancierView.js"></script>
+  <script src="js/finHomePage.js" ></script>
+  <script src="js/finProfilePage.js" ></script>
   <script src="js/finInvoiceListView.js"></script>
   <script src="js/finApprovalQueueView.js"></script>
   <script src="js/finFundedListView.js" ></script>
@@ -46,26 +49,25 @@
     finfloatInvoiceListApp.controller('TabsCtrl2', ['$scope', '$location', 
       function ($scope, $location) {
 
-      $scope.tabs = [
-          { link : '#/list', label : 'Pending' },
-          { link : '#/approve', label: 'Approval Queue'},
-          { link : '#/funded', label : 'Funded' },
-          { link : '#/repaid', label : 'RePaid' }
+      $scope.vtabs = [
+          { link : '#/finhomePg', label : 'Home' },
+          { link : '#/finprofile', label: 'Profiles'}
+          
         ];     
       var index = -1;
-      var tabList =  $scope.tabs;
+      var tabList =  $scope.vtabs;
       for (var i=0; i<tabList.length; i++){
         if( tabList[i].link == '#'+$location.url() ) {
             index = i;
             break;
         }
       }
-      $scope.selectedTab = $scope.tabs[index];
+      $scope.selectedTab = $scope.vtabs[index];
 
-      $scope.setSelectedTab = function(tab) {
+      $scope.vsetSelectedTab = function(tab) {
         $scope.selectedTab = tab;
       }
-      $scope.tabClass = function(tab) {
+      $scope.vtabClass = function(tab) {
         if ($scope.selectedTab == tab) {
           return "active";
         } else {
@@ -85,7 +87,10 @@
       <div class="col-sm-7">
           <img src = "img/logo.jpg" height=65/>                 
       </div>
-      <div class="col-sm-5 well well-sm">
+      <div class="col-sm-2">
+                       
+      </div>
+      <div class="col-sm-3 well well-sm">
           <label> Welcome ${acronym} </label>
           <span style="float:right">
             <a href="/floatinvoice/logout" class="btn btn-primary" title="Logout" data-toggle="tooltip" >
@@ -93,13 +98,18 @@
           </span>
       </div>
     </div>
-    <ul class="nav nav-tabs nav-pills nav-justified" ng-controller="TabsCtrl2">
-      <li ng-class="tabClass(tab)" ng-repeat="tab in tabs" tab="tab"><a href="{{tab.link}}" ng-click="setSelectedTab(tab)">{{tab.label}}</a></li>
-    </ul>
+    <div class="row"> 
+      <div class="col-sm-2">
+        <ul class="nav nav-tabs nav-pills nav-stacked" ng-controller="TabsCtrl2">
+          <li ng-class="vtabClass(vtab, 'stacked')" ng-repeat="vtab in vtabs" tab="vtab"><a href="{{vtab.link}}" ng-click="vsetSelectedTab(vtab, 'stacked')">{{vtab.label}}</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-10">
+        <div app-view-segment="0"></div>
+      </div>
+    </div>
     <br/>
-    <div ng-view></div>
   </div>
-</div>
-    
+   
 </body>
 </html>
